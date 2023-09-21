@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import { EffectCreative, Navigation } from 'swiper/modules';
+import { A11y, EffectCreative, Navigation, Pagination } from 'swiper/modules';
 import './card.css';
 
 export default function CardStack() {
@@ -26,22 +26,27 @@ export default function CardStack() {
     { title: 'CARD #6', color: 'purple' },
   ];
 
-  const goPrev = () => {
-    if (swiperRef.current && swiperRef.current.slidePrev) {
-      swiperRef.current.slidePrev();
+
+
+
+  const handlePrev = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slidePrev();
     }
   };
 
-  const goNext = () => {
-    if (swiperRef.current && swiperRef.current.slideNext) {
-      swiperRef.current.slideNext();
+  const handleNext = () => {
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slideNext();
     }
   };
-
   return (
     <div className="card-stack-container">
       <Swiper
-        ref={swiperRef}
+              ref={swiperRef}
+              navigation={false}
+              pagination={false}
+       modules={[ EffectCreative,Navigation]}
         grabCursor={true}
         loop={true}
         effect={'creative'}
@@ -58,7 +63,7 @@ export default function CardStack() {
             translate: ['120%', 0, -500],
           },
         }}
-        modules={[EffectCreative, Navigation]}
+        // modules={[EffectCreative, Navigation]}
         className="mySwiper2"
         onSlideChange={handleSlideChange}
       >
@@ -68,12 +73,10 @@ export default function CardStack() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <button className="button-prev" onClick={goPrev}>
-        Prev
-      </button>
-      <button className="button-next" onClick={goNext}>
-        Next
-      </button>
+      <div>
+        <button onClick={handlePrev}>PREV</button>
+        <button onClick={handleNext}>NEXT</button>
+      </div>
 
     </div>
   );
